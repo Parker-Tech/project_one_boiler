@@ -40,10 +40,11 @@ function loadVideoBackground() {
 
 function addEventCard() {
   // set variables for our parameters
-  let eventName = $('#eventName').val();
-  let userLocation = $('#userLocation').val();
-  let userRange = $('#userRange').val();
-
+  /* eslint-disable */
+  const eventName = $('#eventName').val();
+  const userLocation = $('#userLocation').val();
+  const userRange = $('#userRange').val();
+  /* eslint-disable */
   // search for venues that are within the maximum distance from userLocation
 }
 
