@@ -2,6 +2,8 @@
 console.warn('Project One JS Initialized');
 /* eslint-enable */
 
+const { $ } = window;
+
 function loadVideoBackground() {
   const bv = new Bideo(); // eslint-disable-line no-undef
   bv.init({
@@ -36,4 +38,15 @@ function loadVideoBackground() {
   });
 }
 
+function addEventCard() {
+  // set variables for our parameters
+  let eventName = $('#eventName').val();
+  let userLocation = $('#userLocation').val();
+  let userRange = $('#userRange').val();
+
+  // search for venues that are within the maximum distance from userLocation
+}
+
 loadVideoBackground();
+
+$('#submit-btn').on('click', addEventCard);
