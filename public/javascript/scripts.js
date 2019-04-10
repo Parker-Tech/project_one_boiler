@@ -102,4 +102,15 @@ function findDistance() {
   })
 }
 
+function getMapImg() {
+  let myUrl = 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyBix0KNYLf70SQQTX8ghmRR59vDqArz2Wk&zoom=15&size=400x400&center=' + eventVenueLong + ',' + eventVenueLati
+
+  $.ajax({
+    url: myUrl,
+    method: 'GET'
+  }).then(function(response) {
+    console.log(response)
+  })
+}
+
 $('#submit-btn').on('click', retrieveForm());
