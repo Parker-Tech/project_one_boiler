@@ -63,6 +63,7 @@ function retrieveForm(event) {
 
   formBlock = [eventName, userLocation, userRange];
 
+
   requestTicketmaster();
   /* eslint-enable */
 }
@@ -141,4 +142,5 @@ function findDistance() {
 }
 
 $('#submit-btn').on('click', retrieveForm);
+
 
