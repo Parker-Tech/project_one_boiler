@@ -4,12 +4,16 @@ console.warn('Project One JS Initialized');
 
 // global variables
 const { $ } = window;
-
+/* eslint-disable */
 let eventName;
 let userLocation;
 let userRange;
-//let formBlock = [];
-
+let formBlock = [];
+let eventVenueLong;
+let eventVenueLati;
+let venueDistance;
+let venueTravelTime;
+/* eslint-enable */
 function loadVideoBackground() {
   const bv = new Bideo(); // eslint-disable-line no-undef
   bv.init({
@@ -49,107 +53,94 @@ loadVideoBackground();
 function retrieveForm(event) {
   event.preventDefault();
 
+  /* eslint-disable */
   eventName = $('#eventName').val().trim();
+  console.log("Input: ", eventName);
   userLocation = $('#userLocation').val().trim();
+  console.log("Input: ", userLocation);
   userRange = $('#userRange').val().trim();
+  console.log("Input: ", userRange);
 
   formBlock = [eventName, userLocation, userRange];
 
 
-  // var queryURL = "https://api.eventful.com/rest/events/get?" + eventName + "&limit=10&lang=en";
+  requestTicketmaster();
+  /* eslint-enable */
+}
+/* eslint-disable */
+function requestTicketmaster() {
+  $("#cardZone").empty();
+  let myUrl = `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=IOLEuwOBaextS3XP3HR0L3NUcF3eaFqf&keyword=${eventName}&postalCode=${userLocation}&radius=${userRange}&unit=miles`;
+  console.log("API URL, Notice its broken if inout is spaced: ", myUrl);
 
-
-  var API_KEY = "sVJJH5rghHKW4MpB";
-  var queryURL = "http://api.eventful.com/rest/events/search?...&keywords=books&location=San+Diego&date=Future&api_key=" + API_KEY;
-  //   // Performing an AJAX request with the queryURL
   $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-  //After data comes back from the request
-  .then(function (response) {
-    // console.log(queryURL);
-    // var results = response.data;
-    console.log(response);
-    console.log(event.url);
-  })
+    url: myUrl,
+    method: 'GET',
+  }).then(function(response) {
+    let responseX = response['_embedded'];
+    console.log("responseX: ", responseX);
+    const events = responseX.events
 
+    $.each(events, function(index, event){
+      let eventTitle = event.name;
+      console.log("eventTitle: ", eventTitle);
+      let eventImg = event.images;
+      console.log("eventImg: ", eventImg);
+      let eventDate = event.dates.start.localDate;
+      console.log("eventDate: ", eventDate);
+      let eventTime = event.dates.start.localTime;
+      console.log("eventTime: ", eventTime);
+      let eventUrl = event.url;
+      console.log("eventUrl: ", eventUrl);
+      let eventVenueName = event['_embedded'].venues[0].name;
+      console.log("eventVenueName: ", eventVenueName);
+      let eventVenueLong = event['_embedded'].venues[0].location.longitude;
+      console.log("eventVenueLong: ", eventVenueLong);
+      let eventVenueLati = event['_embedded'].venues[0].location.latitude;
+      console.log("eventVenueLati", eventVenueLati);
 
+      let newCard = $("<div class='card'>");
+      $("#cardZone").append(newCard);
+      
+      let cardHeader = $("<div class='card-header'>");
+      newCard.append(cardHeader);
+      cardHeader.text(eventTitle);
+      
+      let cardBody = $("<div class='card-body'>");
+      cardHeader.append(cardBody);
+      
+      let button = $("<button>");
+      button.attr("type", "button");
+      button.attr("class", "btn btn-primary");
+      button.attr("data-toggle", "modal");
+      button.attr("data-target", "#exampleModal");
+      button.text("More Info");
+      
+      let info = $("<div>").append(
+
+      $("<p>").text(eventDate),
+      $("<p>").text(eventTime),
+      $("<p>").text(eventVenueName),
+      $("<div>").append(button)
+        );
+      cardBody.append(info);
+    })
+  })
+};
+
+function findDistance() {
+  let myUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?key=AIzaSyBix0KNYLf70SQQTX8ghmRR59vDqArz2Wk&units=imperial&origins=' + eventVenueLong 
+  + ',' + eventVenueLati + '&destinations=' + userLocation
+
+  $.ajax({
+    url: myUrl,
+    method: 'GET'
+  }).then(function(response){
+    venueDistance = response.rows.elements.distance.text;
+    venueTravelTime = reponse.rows.elements.duration.text;
+  })
 }
 
 $('#submit-btn').on('click', retrieveForm);
 
-$('#submit-btn').on('click', retrieveForm);
 
-function createTable() {
-  $("#tableZone").empty();
- //tier 3
-  var newCard = $("<div class='card'>");
-  $("#tableZone").append(newCard);
- //tier 4
-  var siteName = "Bands In Town"; //this will be grabbed from api
-  var newCardHeader = $("<div class='card-header'>" + siteName + "</div>");
-  $("#tableZone > .card").append(newCardHeader);
- //tier 4
-  var newCardBody = $("<div class='card-body'>");
-  $("#tableZone > .card").append(newCardBody);
- //tier 5
-  var table = $("<table class='table'>");
-  $(".card-body").append(newCardHeader);
- //tier 6
-  var tableHead = $("<thead>");
-  $(".table").append(tableHead);
- //tier 7
-  var topRow = $("<tr>").append(
- //tier 8
-  $("<td>").text("Date"),
-  $("<td>").text("Event"),
-  $("<td>").text("Venue Name"),
-  $("<td>").text("City/Town"),
-  $("<td>").text("Buttons")
-    );
- //tier 6
-  $("<thead>").append(topRow);
- //tier 5
-  table.append(tableHead);
- //tier 6
-  var tableBody = $("<tbody>");
-  var button = $("<button>");
-  button.attr ("type", "button");
-  button.attr ("class", "btn btn-primary");
-  button.attr ("data-toggle", "modal");
-  button.attr ("data-target", "#exampleModal");
-  //added attr to show up info inside the modal
-  button.attr("data-title", name);
-  button.attr("data-price", price);
-  button.text("Modal");
-  // var table = $("<table
-
- //tier 7
-  var resultRow = $("<tr>").append(
- //tier 8
-    $("<td>").text(date),
-    $("<td>").text(mainInput),
-    $("<td>").text(venue),
-    $("<td>").text(cityState),
-    $("<td>").text("Add-to-Profile Button"),
-    $("<td>").html(button),
-
-
-    );
- //tier 6
-  tableBody.append(resultRow);
- //tier 5
-  table.append(tableBody);
- //tier 4
-  newCardBody.append(table);
-//added data to the modal to show title and price
-$(document).on("click", ".modal-toggle", function(){
-  let title = $(this).data("title")
-  $("#exampleModal .modal-title").text(title)
-  let price = $(this).data("price")
-  $("#exampleModal .modal-title").text(price)
-});
-
-
-});
