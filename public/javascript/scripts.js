@@ -61,16 +61,16 @@ function retrieveForm(event) {
   console.log("Input: ", userLocation);
   userRange = $('#userRange').val().trim();
   console.log("Input: ", userRange);
+  // formBlock = [eventName, userLocation, userRange];
 
-  formBlock = [eventName, userLocation, userRange];
-
-  requestTicketmaster();
+  requestTicketmaster(eventName, userLocation, userRange);
   /* eslint-enable */
 }
 /* eslint-disable */
-function requestTicketmaster() {
+function requestTicketmaster(eventName, userLocation, userRange) {
   $("#cardZone").empty();
   let myUrl = `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=IOLEuwOBaextS3XP3HR0L3NUcF3eaFqf&keyword=${eventName}&postalCode=${userLocation}&radius=${userRange}&unit=miles`;
+
   console.log("API URL, Notice its broken if inout is spaced: ", myUrl);
 
   $.ajax({
@@ -78,8 +78,9 @@ function requestTicketmaster() {
     method: 'GET',
   }).then(function (response) {
     let responseX = response['_embedded'];
+    console.log(responseX);
 //if else statements added
-    if (reponseX === undifined) {
+    if (responseX === undefined) {
       console.log("tryagain");
       var noResults = $("<div");
       noResults.text("Try Again")
