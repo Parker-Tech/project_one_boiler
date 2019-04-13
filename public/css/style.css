@@ -40,10 +40,13 @@ button {
   z-index: 2;
 }
 .card-header {
-background-color: rgba(54, 53, 53, 0.863);
+  background-color: rgba(54, 53, 53, 0.863);
+  font-weight: bold;
+  font-size: 120%;
 }
 .card-body {
   background-color: rgba(53, 49, 49, 0.363);
+  font-weight: bolder;
 }
 .card-header > eventTitle {
   font-weight: bold;
@@ -52,6 +55,10 @@ background-color: rgba(54, 53, 53, 0.863);
 .card {
   opacity: 0.8;
   color: black;
+}
+
+#dyna-card {
+
 }
 
 form {
