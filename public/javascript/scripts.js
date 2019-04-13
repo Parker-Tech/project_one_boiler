@@ -174,8 +174,8 @@ function requestTicketmaster() {
           console.log("eventImg: ", eventImg);
           let eventDate = event.dates.start.localDate;
           console.log("eventDate: ", eventDate);
-          let eventTime = event.dates.start.localTime;
-          console.log("eventTime: ", eventTime);
+          let eventTimeRaw = event.dates.start.localTime;
+          console.log("eventTime: ", eventTimeRaw);
           let eventUrl = event.url;
           console.log("eventUrl: ", eventUrl);
           let eventVenueName = event['_embedded'].venues[0].name;
@@ -185,7 +185,10 @@ function requestTicketmaster() {
           eventVenueLati = event['_embedded'].venues[0].location.latitude;
           console.log("eventVenueLati", eventVenueLati);
 
-          let newCard = $("<div class='card'>");
+          let eventTime = moment(eventTimeRaw, "hh:mm").format("hh:mm a");
+          console.log(eventTime);
+
+          let newCard = $("<div class='card dyna-card'>");
           $("#cardZone").append(newCard);
 
           let cardHeader = $("<div class='card-header'>");
@@ -207,9 +210,7 @@ function requestTicketmaster() {
 
           let button = $("<button>");
           button.attr("type", "button");
-
           button.attr("class", "btn btn-dark modal-btn");
-
           button.attr("id", "modal-btn");
           button.attr("data-toggle", "modal");
           button.attr("data-target", "#exampleModal");
@@ -286,7 +287,7 @@ $(document).on("click", ".modal-btn", function(){
 
   modalDiv.append($("<p>").text("Distance: " + venueDistance))
 
-  
+
   var link = $(this).data("url");
   var pLink = $("<a>").text("Tickets Here!");
   pLink.attr("href", link);
