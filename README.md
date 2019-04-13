@@ -8,11 +8,11 @@
 ShowSpotter - A search engine where you can find Art/Music events within a given radius. Once information is submitted through the form it will return a list of events where you can view the Event Title, Date, Time, and Venue. User can create a profile page to save events, favorite bands, etc. 
 
 ![Website Screenshot](public/images/web1.png)
-![Response Screenshot](public/images/results.png)
+![Response Screenshot](public/images/results1.png)
 
 ### Added a modal which shows more info on returned events. Specifically a google map with a plot marker of where the Venue is for each result returned and distance.
 
-![Map Screenshot](public/images/mapmodal.png)
+![Map Screenshot](public/images/mapmodal1.png)
 
 You can view our Showspotter app here: <https://show-spotter.herokuapp.com/>
 
@@ -31,6 +31,7 @@ You can view our Showspotter app here: <https://show-spotter.herokuapp.com/>
 * Firebase API - Used to make profile page to save favorite bands, events, etc
 * Bideo - The video background
 * Bootstrap - The web framework used
+* Moment.js - Convert military time from API
 
 ## Beyond our MVP
 
