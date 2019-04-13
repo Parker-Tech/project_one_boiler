@@ -31,6 +31,7 @@ You can view our Showspotter app here: <https://show-spotter.herokuapp.com/>
 * Firebase API - Used to make profile page to save favorite bands, events, etc
 * Bideo - The video background
 * Bootstrap - The web framework used
+* Moment.js - Convert military time from API
 
 ## Beyond our MVP
 
